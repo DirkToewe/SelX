@@ -1,7 +1,8 @@
 SelX is an exploratory project that compares the performance and efficiency of different
 [Selection Algorithms](https://en.wikipedia.org/wiki/Selection_algorithm). As a baseline
-the algorithms are also compared to `java.util.Arrays.sort`. SelX implements multiple
-evolutions of the following Selection Algorithms:
+the algorithms are also compared to `java.util.Arrays.sort`. The benchmark results for random
+uniform boxed Double inputs can be found [here](https://dirktoewe.github.io/SelX/benchmark_boxed.html).
+SelX implements multiple evolutions of the following Selection Algorithms:
 
 <dl>
 <dt>Bubble Select<dd>
