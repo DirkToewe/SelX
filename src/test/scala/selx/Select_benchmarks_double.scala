@@ -1,12 +1,11 @@
 package selx
 
-import java.util.{Arrays, Comparator}
+import java.util.Arrays
 import java.util.concurrent.TimeUnit
 
 import org.openjdk.jmh.annotations._
 
 import scala.util.Random
-import java.lang.{Double => JDouble}
 
 @BenchmarkMode(Array(Mode.AverageTime))
 @Fork( value = 4, jvmArgsAppend = Array("-Xmx8g") )
@@ -15,7 +14,7 @@ import java.lang.{Double => JDouble}
 @Measurement(iterations = 8)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Benchmark)
-class Select_benchmarks_boxed
+class Select_benchmarks_double
 {
   @Param(Array(
     "10000000",
@@ -30,11 +29,10 @@ class Select_benchmarks_boxed
   var SIZE: Int = _
 
   private val rng = new Random(1337)
-  private var array = null: Array[JDouble]
+  private var array = null: Array[Double]
   private var k = -1
-  private val compareFn = (x: JDouble, y: JDouble) => (x-y).signum
-  private val id = (x: JDouble) => x*1.0
-  private val comparator: Comparator[JDouble] = compareFn(_,_)
+  private val compareFn = (x: Double, y: Double) => (x-y).signum
+  private val id = (x: Double) => x*1.0
 
   @Setup(Level.Trial) def init_array: Unit =
   {
@@ -74,5 +72,5 @@ class Select_benchmarks_boxed
 
   @Benchmark
   def sort(): Unit
-    = Arrays sort (array, comparator)
+    = Arrays sort array
 }

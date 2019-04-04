@@ -53,9 +53,9 @@ object MeanSelectV2
         var l = from
         var m = from+1
         var r = until
+        var piv = vals(l)
         while( m < r )
         {
-          val piv = vals(l)
           val nxt = vals(m)
           if( nxt == piv ) // <- keep track of multiple pivots (allows us to adjust `split` to be closer to `i`)
             m += 1
@@ -67,6 +67,7 @@ object MeanSelectV2
                 m -= 1
               }
             }
+            piv = nxt
             l = m; m += 1
           }
           else if( nxt > piv ) { // <- value right of split

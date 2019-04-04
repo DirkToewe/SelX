@@ -16,11 +16,12 @@
 
 package selx
 
+import java.awt.Desktop.getDesktop
 import java.lang.Math.log
 import java.lang.System.{arraycopy, nanoTime}
 import java.nio.file.Files
-import java.util.{Arrays, Comparator}
 import java.util.Arrays.asList
+import java.util.{Arrays, Comparator}
 
 import breeze.linalg.{DenseMatrix, DenseVector}
 import breeze.stats.regression.leastSquares
@@ -33,8 +34,8 @@ object Select_comparison
 {
   def main( args: Array[String] ): Unit =
   {
-    type DType = java.lang.Double
-//    type DType = Double
+//    type DType = java.lang.Double
+    type DType = Double
 
     implicit object ord extends ( (DType,DType) => Int ) with Comparator[DType] {
       var comparisons = 0
@@ -97,7 +98,7 @@ object Select_comparison
       "MoMoM3 v4" -> SelectMoMoM3v4,
 //      "Quick v1"  -> SelectQuickV1,
       "Quick v2"  -> SelectQuickV2,
-//      "Sort"      -> SelectSort,
+      "Sort"      -> SelectSort,
       "SortBoxed" -> SelectSortBoxed,
 //      "Bubble"    -> SelectBubble
     )
@@ -107,7 +108,7 @@ object Select_comparison
     val comparisons = select_methods map {_._1 -> ArrayBuffer.empty[Long]  }
 
     val rng = new Random()
-    for( run <- 1 to 256 )
+    for( run <- 1 to 1024 )
     {
 //      assert(size > 0)
 //      val VALUES = Array.fill[Double]( rng.nextInt(128)+1 )(rng.nextDouble)
@@ -123,8 +124,8 @@ object Select_comparison
       sizes += VALUES.length
 
       val         SORTED = VALUES.clone
-//      Arrays sort SORTED
-      Arrays sort (SORTED,ord)
+      Arrays sort SORTED
+//      Arrays sort (SORTED,ord)
 
       for( (name,select) <- rng.shuffle(select_methods) )
       {
@@ -144,8 +145,8 @@ object Select_comparison
         for( j <- 0 to i                ) assert( values(j) <= values(i) )
         for( j <- i until values.length ) assert( values(j) >= values(i) )
 
-//        Arrays.sort(values)
-        Arrays sort (values,ord)
+        Arrays.sort(values)
+//        Arrays sort (values,ord)
 
         for( i <- 0 until SORTED.length )
           assert( SORTED(i) == values(i) )
@@ -200,6 +201,7 @@ object Select_comparison
 
       val tmp = Files.createTempFile("plot_",".html")
       Files.write(tmp, asList(plot) )
+      printf("%s written to %s\n", title, tmp)
 //      getDesktop.browse(tmp.toUri)
     }
 
