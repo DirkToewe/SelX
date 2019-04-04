@@ -1,0 +1,100 @@
+<!--
+  This file is part of ND.JS.
+  
+  ND.JS is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  ND.JS is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with ND.JS. If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Select Algorithms Benchmark - Boxed Double</title>
+  <script type="text/javascript" src="./nd.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <script type="text/javascript">
+    'use strict';
+    const plot = document.createElement('div');
+    plot.style = 'width: 90vw; height: 90vh;';
+    document.body.appendChild(plot);
+
+    const sizes = [
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      100000,
+      1000000,
+      10000000
+    ];
+
+    Plotly.plot(plot, {
+      "data": [
+        {
+          name: 'Mean Select',
+          type: 'scattergl',
+          marker: { symbol: 'triangle-down', size: 10 },
+          x: sizes,
+          y: [44.478, 361.649, 3325.939, 30995.142, 309595.082, 4856131.999, 62848920.856, 668007838.780]
+        },{
+          name: 'MoM3',
+          type: 'scattergl',
+          marker: { symbol: 'square', size: 10 },
+          x: sizes,
+          y: [44.166, 318.206, 4642.383, 60849.641, 657940.077, 10727700.658, 172596826.236, 2041674350.297]
+        },{
+          name: 'MoM5',
+          type: 'scattergl',
+          marker: { symbol: 'circle', size: 10 },
+          x: sizes,
+          y: [44.922, 331.567, 4902.792, 59971.820, 625252.185, 9260347.221, 126954307.863, 1644719349.553]
+        },{
+          name: 'MoMoM3',
+          type: 'scattergl',
+          marker: { symbol: 'x', size: 10 },
+          x: sizes,
+          y: [44.460, 319.376, 4629.118, 57516.875, 603260.286, 9915233.518, 163175152.110, 1859168150.567]
+        },{
+          name: 'Quick',
+          type: 'scattergl',
+          marker: { symbol: 'diamond', size: 10 },
+          x: sizes,
+          y: [44.331, 335.114, 4011.128, 36546.792, 353544.920, 4712958.052, 59843992.184, 568646849.670]
+        },{
+          name: 'Arrays.sort',
+          type: 'scattergl',
+          marker: { symbol: 'cross', size: 10 },
+          x: sizes,
+          y: [44.771, 588.332, 12803.395, 201616.866, 2827026.142, 41141768.619, 682942718.127, 10427269358.813]
+        }
+      ],
+      "layout": {
+        "title": "<b>Select Algorithms Benchmark</b><br>Boxed Double",
+        "xaxis": {
+          type: 'log',
+          "title": "size"
+        },
+        "yaxis": {
+          type: 'log',
+          "title": "time [nsec]"
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+      
